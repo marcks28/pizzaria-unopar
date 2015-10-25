@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="{% static "img/01.png" %}" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Especialidades</h1>
+              <p>Molho, Mussarela, Parmesão, Requeijão e Orégano.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="Detalhes">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="{% static "img/02.png" %}" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Especialidades</h1>
+              <p>Molho, Mussarela, Parmesão, Requeijão e Orégano.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-slide" src="{% static "img/03.png" %}" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Especialidades</h1>
+              <p>Molho, Mussarela, Parmesão, Requeijão e Orégano.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver todos</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        {% for Produto in object_list %}
+          <div class="col-lg-4">
+          {% if Produto.photo %}
+            <img class="img-circle" src="{{ Produto.photo.url }}" alt="Generic placeholder image" width="140" height="140">
+          {% else %}
+            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          {% endif %}        
+          <h2>{{ Produto }}</h2>
+          {{ Produto.descricao|linebreaks }}
+          <h3>{{ Produto.get_tamanho_display }}</h3>
+          <p>R$ : {{ Produto.preco }}</p>
+          <p><a class="btn btn-default" href="#" role="button">Eu quero &raquo;</a></p>
+          </div>
+        {% endfor %}
+        </div><!-- /.row -->
+      <!-- /END THE FEATURETTES -->
+{% endblock %}
