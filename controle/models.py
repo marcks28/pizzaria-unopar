@@ -75,7 +75,7 @@ class Pedido(models.Model):
 	create_on = models.DateTimeField(auto_now=True,verbose_name='Pedido realizado em')
 	cliente = models.ForeignKey(Cliente,related_name='clientes_pedido',verbose_name='Cliente')
 	produto = models.ForeignKey(Produto,related_name='prodtudo_pedido',verbose_name='Produto')
-	quantidade = models.IntegerField(verbose_name='Quantidade')
+	quantidade = models.IntegerField(verbose_name='Qnt')
 	choice_pedido = (
 		('PE','Pendente'),
 		('EM',u'Em trânsito'),
@@ -86,10 +86,40 @@ class Pedido(models.Model):
 	taxa_entrega = models.DecimalField(max_digits=6,decimal_places=2,verbose_name='Taxa',default=3.50)
 
 	def __str__(self):
-		return str(self.create_on)
+		return str(self.id)
 
 	def valor(self):
 		return (self.quantidade * self.produto.preco) + self.taxa_entrega
 	
 	def  valor_Unit(self):
 		return self.produto.preco
+
+class Entrega(models.Model):
+	data_entrega = models.DateTimeField(auto_now=True,verbose_name='Dt. Entrega')
+	entregador = models.ForeignKey(Entregador,related_name='entrega_entregador',verbose_name='Entregador')
+	pedido = models.ForeignKey(Pedido,related_name='pedido_entrega',verbose_name='Pedido')
+	entrega_choice = (
+		('EN','Entregue'),
+		('ET',u'Em trânsito'),
+		('CN','Cancelado'),
+	)
+	status_entrega = models.CharField(verbose_name=u'Situação',choices=entrega_choice,default='ET',max_length=2)
+
+	def __str__(self):
+		if self.status_entrega == 'EN':
+			ped = Pedido.objects.get(id=self.pedido.id)
+			ped.status = 'ET'
+			ped.save()
+		elif self.status_entrega == 'CN':
+			ped = Pedido.objects.get(id=self.pedido.id)
+			ped.status = 'CN'
+			ped.save()
+		elif self.status_entrega == 'ET':
+			ped = Pedido.objects.get(id=self.pedido.id)
+			ped.status = 'EM'
+			ped.save()
+		else:
+			ped = Pedido.objects.get(id=self.pedido.id)
+			ped.status = 'PE'
+			ped.save()
+		return str(self.data_entrega)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Produto,Cliente,Empresa, Entregador, Pedido
+from .models import Produto,Cliente,Empresa, Entregador, Pedido,Entrega
 # Register your models here.
 class ProdutoAdmin(admin.ModelAdmin):
 	model = Produto
@@ -26,12 +26,17 @@ class EntragadorAdmin(admin.ModelAdmin):
 
 class PedidoAdmin(admin.ModelAdmin):
 	model= Pedido
-	list_display = ('create_on','cliente','produto','valor_Unit','quantidade','taxa_entrega','valor',)
+	list_display = ('id','create_on','cliente','produto','valor_Unit','quantidade','taxa_entrega','valor','status',)
 	list_filter = ['status']
 	search_fields = ['cliente']
-		
+	
+class EntregaAdmin(admin.ModelAdmin):
+	model=Entrega
+	list_display = ('pedido','data_entrega','status_entrega','entregador',)
+
 admin.site.register(Produto,ProdutoAdmin)
 admin.site.register(Cliente,ClienteAdmin)
 admin.site.register(Empresa,EmpresaAdmin)
 admin.site.register(Entregador,EntragadorAdmin)
 admin.site.register(Pedido,PedidoAdmin)
+admin.site.register(Entrega,EntregaAdmin)
