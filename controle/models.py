@@ -93,3 +93,8 @@ class Pedido(models.Model):
 	
 	def  valor_Unit(self):
 		return self.produto.preco
+
+class Entrega(models.Model):
+	created_on = models.DateTimeField(auto_now=True,verbose_name='Data entrega')
+	entregador = models.ForeignKey(Entregador,related_name='entregadores',verbose_name='Entregadores')
+	pedido = models.ForeignKey(Pedido,related_name='pedido',verbose_name='Pedido')
