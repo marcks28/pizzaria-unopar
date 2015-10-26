@@ -71,4 +71,25 @@ class Entregador(models.Model):
 		verbose_name_plural='Entregadores'
 		ordering = ['nome']
 
+class Pedido(models.Model):
+	create_on = models.DateTimeField(auto_now=True,verbose_name='Pedido realizado em')
+	cliente = models.ForeignKey(Cliente,related_name='clientes_pedido',verbose_name='Cliente')
+	produto = models.ForeignKey(Produto,related_name='prodtudo_pedido',verbose_name='Produto')
+	quantidade = models.IntegerField(verbose_name='Quantidade')
+	choice_pedido = (
+		('PE','Pendente'),
+		('EM',u'Em trânsito'),
+		('CN','Cancelado'),
+		('ET','Entregue'),
+	)
+	status = models.CharField(verbose_name='Status',choices=choice_pedido,default='PE',max_length=2)
+	taxa_entrega = models.DecimalField(max_digits=6,decimal_places=2,verbose_name='Taxa',default=3.50)
 
+	def __str__(self):
+		return str(self.create_on)
+
+	def valor(self):
+		return (self.quantidade * self.produto.preco) + self.taxa_entrega
+	
+	def  valor_Unit(self):
+		return self.produto.preco
