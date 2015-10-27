@@ -13,16 +13,16 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from controle.views import homeView,ProdutoView
+from controle.views import HomeView, ProdutoView
 
 urlpatterns = [
-	url(r'^$',homeView.as_view(),name='homeView'),
-    url(r'^admin/', include(admin.site.urls)),
-    #url(r'^controle/', include('controle.urls')),
-    url(r'^produtos/(?P<slug>[\w_-]+)/', ProdutoView.as_view(), name='product_details'),
-   # url(r'^products/(?P<pk>[0-9]+)/$', views.product_detail),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  url(r'^$', HomeView.as_view(), name='homeView'),
+                  url(r'^admin/', include(admin.site.urls)),
+                  # url(r'^controle/', include('controle.urls')),
+                  url(r'^produtos/(?P<slug>[\w_-]+)/', ProdutoView.as_view(), name='product_details'),
+                  # url(r'^products/(?P<pk>[0-9]+)/$', views.product_detail),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
