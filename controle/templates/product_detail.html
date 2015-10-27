@@ -6,15 +6,22 @@
 
       <div class="row featurette">
         <div class="col-md-7 col-md-push-5">
+          <!--<div class="col-md-5 col-md-pull-7">-->
+          <img class="featurette-image img-responsive center-block" src="{{ produto.photo.url }}" alt="Generic placeholder image">
+        </div>
+
+
+        <div class="col-md-5 col-md-pull-7">
+          <!--<div class="col-md-7 col-md-push-5">-->
           <h2 class="featurette-heading">{{ produto }}<span class="text-muted"></span></h2>
           <h3><b>{{produto.get_tamanho_display}}</b></h3>
           <p class="lead">{{ produto.descricao }}</p>
           <h3>R$ {{produto.preco}}</h3>
         </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" src="{{ produto.photo.url }}" alt="Generic placeholder image">
-        </div>
+
       </div>
+
+
        <div class="">
          
          <p><a class="btn btn-primary btn-lg" href="{{ Produto.get_absolute_url }}" role="button">Fazer pedido</a></p>
