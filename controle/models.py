@@ -5,6 +5,9 @@ class Produto(models.Model):
 	
 	nome = models.CharField(verbose_name='Nome',max_length=100)
 	descricao = models.TextField(verbose_name=u'Descrição')
+	photo = models.ImageField(upload_to='controle/%Y/%m/%d',null=True,blank=True)
+	preco = models.DecimalField(max_digits=6,decimal_places=2,verbose_name=u'Preço')
+	destaque = models.BooleanField(default=False,verbose_name=u'Destaque?',blank=True)
 	opcao_choice = (
 		('P','Pequena'),
 		('M',u'Média'),
@@ -12,10 +15,12 @@ class Produto(models.Model):
 		('T',u'Família'),
 	)
 	tamanho = models.CharField(verbose_name='Tamanho',choices=opcao_choice,max_length=1)
-	photo = models.ImageField(upload_to='controle/%Y/%m/%d',null=True,blank=True)
-	preco = models.DecimalField(max_digits=6,decimal_places=2,verbose_name=u'Preço')
-	destaque = models.BooleanField(default=False,verbose_name='Destaque')
 	slug = models.SlugField(blank=False)
+
+	@models.permalink
+	def get_absolute_url(self):
+		return ('product_details',(),{'slug': self.slug })
+
 	def __str__(self):
 		return self.nome
 
@@ -82,6 +87,7 @@ class Pedido(models.Model):
 	create_on = models.DateTimeField(auto_now=True,verbose_name='Pedido realizado em')
 	cliente = models.ForeignKey(Cliente,related_name='clientes_pedido',verbose_name='Cliente')
 	produto = models.ForeignKey(Produto,related_name='prodtudo_pedido',verbose_name='Produto')
+
 	quantidade = models.IntegerField(verbose_name='Qnt')
 	choice_pedido = (
 		('PE','Pendente'),

@@ -51,17 +51,10 @@
         <span class="sr-only">Next</span>
       </a>
     </div><!-- /.carousel -->
+{% endblock %}
 
-
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    <div class="container marketing">
-
-      <!-- Three columns of text below the carousel -->
-      <div class="row">
-        {% for Produto in object_list %}
+  {% block images %}
+      {% for Produto in object_list %}
           <div class="col-lg-4">
           {% if Produto.photo %}
             <img class="img-circle" src="{{ Produto.photo.url }}" alt="Generic placeholder image" width="140" height="140">
@@ -69,12 +62,18 @@
             <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
           {% endif %}        
           <h2>{{ Produto }}</h2>
-          {{ Produto.descricao|linebreaks }}
           <h3>{{ Produto.get_tamanho_display }}</h3>
-          <p>R$ : {{ Produto.preco }}</p>
-          <p><a class="btn btn-default" href="#" role="button">Eu quero &raquo;</a></p>
+          <p>R$ : {{ Produto.preco }}</p> 
+
+          <p><a class="btn btn-default" href="{{ Produto.get_absolute_url }}" role="button">Eu quero &raquo;</a></p>
           </div>
         {% endfor %}
-        </div><!-- /.row -->
-      <!-- /END THE FEATURETTES -->
-{% endblock %}
+        <ul class="pager">
+          {% if pager_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+          {% endif %}
+          {% if pager_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">Próxima</a></li>
+          {% endif %}
+        </ul>
+    {% endblock %}

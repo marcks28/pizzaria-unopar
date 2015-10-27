@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Produto,Cliente,Empresa, Entregador, Pedido,Entrega
-# Register your models here.
 class ProdutoAdmin(admin.ModelAdmin):
 	model = Produto
 	prepopulated_fields = {'slug': ('nome',)}
@@ -33,10 +32,13 @@ class PedidoAdmin(admin.ModelAdmin):
 	list_display = ('id','create_on','cliente','produto','valor_Unit','quantidade','taxa_entrega','valor','status',)
 	list_filter = ['status']
 	search_fields = ['cliente']
+	exclude = ['status']
 	
 class EntregaAdmin(admin.ModelAdmin):
 	model=Entrega
 	list_display = ('pedido','data_entrega','status_entrega','entregador',)
+
+
 
 admin.site.register(Produto,ProdutoAdmin)
 admin.site.register(Cliente,ClienteAdmin)

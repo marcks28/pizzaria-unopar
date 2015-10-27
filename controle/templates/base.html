@@ -70,17 +70,40 @@
 
       </div>
     </div>
+{% block content %}
+{% endblock %}
 
-    {% block content %}
+{% block marketing %}
+<div class="container marketing">
 
-    {% endblock %}
+      <!-- Three columns of text below the carousel -->
+      {% block images %}
+      <div class="row">
+
+      </div><!-- /.row -->
+      {% endblock %}
+
+      <!-- START THE FEATURETTES -->
+      {% block divider %}
+      <hr class="featurette-divider">
+
+      {% endblock %}
+      <hr class="featurette-divider">
+
+
       <!-- FOOTER -->
       <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2015 Desenvolvido por alunos Unopar - Polo Xique-Xique BA. &middot; <a href="#">Todos os direitos reservados</a></p>
+        <p class="pull-right"><a href="#">Ir ao topo</a></p>
+        <p>&copy; 2015 Desenvolvido por alunos Unopar, Polo - Xique-Xique - BA. &middot; </p>
       </footer>
 
     </div><!-- /.container -->
+{% endblock %}
+
+
+
+
+
 
 
     <!-- Bootstrap core JavaScript
