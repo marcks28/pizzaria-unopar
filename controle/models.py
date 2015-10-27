@@ -2,8 +2,9 @@
 from django.db import models
 
 class Produto(models.Model):
+	
 	nome = models.CharField(verbose_name='Nome',max_length=100)
-	descricao = models.TextField(verbose_name=u'Descrição',max_length=255)
+	descricao = models.TextField(verbose_name=u'Descrição')
 	opcao_choice = (
 		('P','Pequena'),
 		('M',u'Média'),
@@ -14,6 +15,7 @@ class Produto(models.Model):
 	photo = models.ImageField(upload_to='controle/%Y/%m/%d',null=True,blank=True)
 	preco = models.DecimalField(max_digits=6,decimal_places=2,verbose_name=u'Preço')
 	destaque = models.BooleanField(default=False,verbose_name='Destaque')
+	slug = models.SlugField(blank=False)
 	def __str__(self):
 		return self.nome
 
@@ -28,6 +30,7 @@ class Cliente(models.Model):
 	telefone = models.CharField(verbose_name='Telefone',max_length=14,unique=True)
 	endereco = models.CharField(verbose_name=u'Endereço',max_length=255)
 	referencia = models.CharField(verbose_name=u'Referência',max_length=255)
+	slug = models.SlugField(blank=False)
 	choice_sexo = (
 		('M','Masculino'),
 		('F','Feminino'),
@@ -42,11 +45,13 @@ class Cliente(models.Model):
 		ordering= ['nome']
 
 class Empresa(models.Model):
+	
 	nome =models.CharField(verbose_name='Nome',max_length=50)
 	cnpj = models.CharField(verbose_name='CNPJ',max_length=20,unique=True)
 	telefone = models.CharField(verbose_name='Telefone',max_length=14)
 	endereco = models.CharField(verbose_name=u'Endereço',max_length=100)
 	email = models.EmailField(verbose_name='Email',null=True,blank=True)
+	slug = models.SlugField(blank=False)
 
 	def __str__(self):
 		return self.nome
@@ -57,11 +62,13 @@ class Empresa(models.Model):
 		ordering = ['nome']
 
 class Entregador(models.Model):
+	
 	nome = models.CharField(verbose_name='Nome',max_length=100)
 	cpf = models.CharField(verbose_name='CPF',max_length=20,unique=True)
 	rg = models.CharField(verbose_name='RG',max_length=20,unique=True)
 	celular = models.CharField(verbose_name='Celular',max_length=14)
 	empresa = models.ForeignKey(Empresa,related_name='Entregadores',verbose_name='Empresa')
+	slug = models.SlugField(blank=False)
 
 	def __str__(self):
 		return self.nome
@@ -84,6 +91,7 @@ class Pedido(models.Model):
 	)
 	status = models.CharField(verbose_name='Status',choices=choice_pedido,default='PE',max_length=2)
 	taxa_entrega = models.DecimalField(max_digits=6,decimal_places=2,verbose_name='Taxa',default=3.50)
+	slug = models.SlugField(blank=False)
 
 	def __str__(self):
 		return str(self.id)
@@ -104,6 +112,8 @@ class Entrega(models.Model):
 		('CN','Cancelado'),
 	)
 	status_entrega = models.CharField(verbose_name=u'Situação',choices=entrega_choice,default='ET',max_length=2)
+	slug = models.SlugField(blank=False)
+
 
 	def __str__(self):
 		if self.status_entrega == 'EN':

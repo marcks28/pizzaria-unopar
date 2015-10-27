@@ -31,6 +31,7 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT,'media')
 # Application definition
 
 INSTALLED_APPS = (
+    'app',
     'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
